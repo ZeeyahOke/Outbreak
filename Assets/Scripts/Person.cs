@@ -21,10 +21,16 @@ public class Person : MonoBehaviour
 
     private Renderer rend;
     private Vector3 target;
+     private LineRenderer line;    
+    private Transform infectedBy;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
+        line = GetComponent<LineRenderer>();
+        // Start with no line drawn; it turns on only when this person is infected.
+        line.positionCount = 0;
+        line.enabled = false;
         ApplyColor();
         PickNewTarget();
     }
@@ -48,6 +54,13 @@ public class Person : MonoBehaviour
         // Pick a new random one.
         if (Vector3.Distance(pos, target) <= reachDistance)
             PickNewTarget();
+
+        // --- keep the transmission line connected as both people move ---
+        if (infectedBy != null)
+        {
+            line.SetPosition(0, infectedBy.position);
+            line.SetPosition(1, transform.position);
+        }
     }
 
     void PickNewTarget()
@@ -56,7 +69,26 @@ public class Person : MonoBehaviour
         float z = Random.Range(-arenaRadius, arenaRadius);
         target = new Vector3(x, transform.position.y, z);
     }
+// Fires when our trigger overlaps another collider.
+    void OnTriggerEnter(Collider other)
+    {
+        if (state != State.Infected) return;          // only infected people spread it
+        Person otherPerson = other.GetComponent<Person>();
+        if (otherPerson == null) return;
+        if (otherPerson.state == State.Healthy)        // vaccinated / already-infected are immune
+            otherPerson.CatchInfectionFrom(transform);
+    }
 
+    // Called on the person being infected.
+    public void CatchInfectionFrom(Transform source)
+    {
+        infectedBy = source;
+        SetState(State.Infected);
+        line.positionCount = 2;
+        line.SetPosition(0, source.position);
+        line.SetPosition(1, transform.position);
+        line.enabled = true;
+    }
     public void SetState(State newState)
     {
         state = newState;
