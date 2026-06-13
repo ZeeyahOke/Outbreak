@@ -10,9 +10,14 @@ public class Person : MonoBehaviour
     public State state = State.Healthy;
 
     [Header("Movement")]
-    public float moveSpeed = 2f;        // how fast the patient walks
-    public float arenaRadius = 8f;      // how far from the centre they can wander
-    public float reachDistance = 0.3f;  // how close before choosing a new spot
+    public float moveSpeed = 2f;
+    public float reachDistance = 0.3f;
+
+    [Header("Wander Bounds")]
+    public float minX = -9f;  
+    public float maxX = 9f;
+    public float minZ = -6f;   
+    public float maxZ = 9f;
 
     [Header("Colours")]
     public Color healthyColor = Color.green;
@@ -65,8 +70,8 @@ public class Person : MonoBehaviour
 
     void PickNewTarget()
     {
-        float x = Random.Range(-arenaRadius, arenaRadius);
-        float z = Random.Range(-arenaRadius, arenaRadius);
+        float x = Random.Range(minX, maxX);
+        float z = Random.Range(minZ, maxZ);
         target = new Vector3(x, transform.position.y, z);
     }
 // Fires when our trigger overlaps another collider.
