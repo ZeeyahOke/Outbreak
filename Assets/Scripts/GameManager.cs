@@ -25,24 +25,52 @@ public class GameManager : MonoBehaviour
     public Text infectedText;
     public Text vaccinatedText;
     public Text timerText;
+    
+    [Header("End panels")]
+    public GameObject winPanel;
+    public GameObject losePanel;
 
     private List<Person> people = new List<Person>();
     private float timeLeft;
+    private bool gameOver;
 
     void Start()
     {
-        Time.timeScale = 1f;          // in case a previous game paused it
+        Time.timeScale = 1f;          
         timeLeft = gameDuration;
+        if (winPanel)  winPanel.SetActive(false);
+        if (losePanel) losePanel.SetActive(false);
         SpawnPeople();
     }
 
     void Update()
     {
-        // Tick the clock down (just stops at zero for now; consequences come in 5b).
+        if (gameOver) return;
+
         if (timeLeft > 0f) timeLeft -= Time.deltaTime;
         if (timeLeft < 0f) timeLeft = 0f;
 
         CountAndShow();
+        CheckEnd();
+    }
+
+    void CheckEnd()
+    {
+        int infected = 0;
+        foreach (Person p in people)
+            if (p.state == Person.State.Infected) infected++;
+
+        if (infected == 0 && Time.timeSinceLevelLoad > 0.5f)
+            EndGame(winPanel);          // outbreak contained
+        else if (timeLeft <= 0f)
+            EndGame(losePanel);         // ran out of time
+    }
+
+    void EndGame(GameObject panel)
+    {
+        gameOver = true;
+        Time.timeScale = 0f;            // freeze the patients
+        if (panel) panel.SetActive(true);
     }
 
     void SpawnPeople()

@@ -61,7 +61,7 @@ public class Person : MonoBehaviour
             PickNewTarget();
 
         // --- keep the transmission line connected as both people move ---
-        if (infectedBy != null)
+        if (infectedBy != null && line.positionCount == 2)
         {
             line.SetPosition(0, infectedBy.position);
             line.SetPosition(1, transform.position);
