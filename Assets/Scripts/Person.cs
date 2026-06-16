@@ -98,6 +98,14 @@ public class Person : MonoBehaviour
     {
         state = newState;
         ApplyColor();
+
+        // A vaccinated patient is cleared, so remove their incoming transmission line.
+        if (state == State.Vaccinated)
+        {
+            infectedBy = null;
+            line.positionCount = 0;
+            line.enabled = false;
+        }
     }
 
     void ApplyColor()

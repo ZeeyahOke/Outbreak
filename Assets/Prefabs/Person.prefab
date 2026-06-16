@@ -126,7 +126,7 @@ Rigidbody:
   m_GameObject: {fileID: 4091342799641675624}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -158,8 +158,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Person
   state: 0
   moveSpeed: 2
-  arenaRadius: 8
   reachDistance: 0.3
+  minX: -9
+  maxX: 9
+  minZ: -6
+  maxZ: 9
   healthyColor: {r: 0, g: 1, b: 0, a: 1}
   infectedColor: {r: 1, g: 0, b: 0, a: 1}
   vaccinatedColor: {r: 0, g: 0, b: 1, a: 1}
