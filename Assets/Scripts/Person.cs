@@ -32,13 +32,18 @@ public class Person : MonoBehaviour
     [Header("Audio")]
     public AudioSource infectionSound;   
 
-    void Start()
+    void Awake()
     {
         rend = GetComponent<Renderer>();
         line = GetComponent<LineRenderer>();
+    }
+
+    void Start()
+    {
         // Start with no line drawn; it turns on only when this person is infected.
         line.positionCount = 0;
         line.enabled = false;
+
         ApplyColor();
         PickNewTarget();
     }
@@ -92,7 +97,9 @@ public class Person : MonoBehaviour
     {
         infectedBy = source;
         SetState(State.Infected);
+
         if (infectionSound) infectionSound.Play();
+
         line.positionCount = 2;
         line.SetPosition(0, source.position);
         line.SetPosition(1, transform.position);
