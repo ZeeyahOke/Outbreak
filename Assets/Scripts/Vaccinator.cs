@@ -13,10 +13,13 @@ public class Vaccinator : MonoBehaviour
     [Header("Tap detection")]
     public float tapMoveThreshold = 15f;  // pixels; move less than this = a tap, more = a look-drag
 
-[Header("Beam")]
-    public LineRenderer beam;             // the vaccinator beam (set up on the camera in the Inspector)
+    [Header("Beam")]
+    public LineRenderer beam;             // the vaccinator beam 
     public Transform muzzlePoint;         // needle tip of the injection tool; beam starts here
     public float beamDuration = 0.08f;    // how long the beam flashes
+
+    [Header("Audio")]
+    public AudioSource vaccinateSound;    
 
     private GameControls controls;
     private Vector2 pressStartPos;
@@ -87,8 +90,10 @@ public class Vaccinator : MonoBehaviour
         {
             Person p = hit.collider.GetComponent<Person>();
             if (p != null && p.state != Person.State.Vaccinated)
+            {
                 p.SetState(Person.State.Vaccinated);
-
+                if (vaccinateSound) vaccinateSound.Play();
+            }
             ShowBeam(hit.point);
         }
     }

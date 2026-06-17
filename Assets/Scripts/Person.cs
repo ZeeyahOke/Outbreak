@@ -26,8 +26,11 @@ public class Person : MonoBehaviour
 
     private Renderer rend;
     private Vector3 target;
-     private LineRenderer line;    
+    private LineRenderer line;    
     private Transform infectedBy;
+    
+    [Header("Audio")]
+    public AudioSource infectionSound;   
 
     void Start()
     {
@@ -89,6 +92,7 @@ public class Person : MonoBehaviour
     {
         infectedBy = source;
         SetState(State.Infected);
+        if (infectionSound) infectionSound.Play();
         line.positionCount = 2;
         line.SetPosition(0, source.position);
         line.SetPosition(1, transform.position);
