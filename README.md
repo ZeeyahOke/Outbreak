@@ -30,7 +30,7 @@ You're a health worker at a clinic triage station. Patients wander the floor; on
   show each transmission.
 - **Win:** eliminate all active infections (no red patients left) before the timer hits 0:00.
 - **Lose:** the timer reaches 0:00 while patients are still infected.
-Colour key: **green = healthy, red = infected, blue = vaccinated/immune.**
+- Colour key: **green = healthy, red = infected, blue = vaccinated/immune.**
 
 ## Unity Mechanics
 - **UI** — live Healthy/Infected/Vaccinated counters, mm:ss timer, crosshair, win/lose panels, main menu.
