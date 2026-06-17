@@ -1641,6 +1641,7 @@ MonoBehaviour:
   muzzlePoint: {fileID: 1868152269}
   beamDuration: 0.08
   vaccinateSound: {fileID: 963194232}
+  vaccinatePuff: {fileID: 3384565181520817869, guid: a1dc152b341fc427b9045bad902f000b, type: 3}
 --- !u!120 &963194231
 LineRenderer:
   serializedVersion: 3

@@ -21,6 +21,9 @@ public class Vaccinator : MonoBehaviour
     [Header("Audio")]
     public AudioSource vaccinateSound;    
 
+    [Header("Particles")]
+    public GameObject vaccinatePuff;      // a one-shot particle prefab, spawned on vaccinate
+
     private GameControls controls;
     private Vector2 pressStartPos;
     private float beamTimer;
@@ -93,7 +96,9 @@ public class Vaccinator : MonoBehaviour
             {
                 p.SetState(Person.State.Vaccinated);
                 if (vaccinateSound) vaccinateSound.Play();
+                if (vaccinatePuff) Instantiate(vaccinatePuff, p.transform.position, Quaternion.identity);
             }
+
             ShowBeam(hit.point);
         }
     }
